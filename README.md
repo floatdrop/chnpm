@@ -1,0 +1,4 @@
+chnpm
+=====
+
+npm configuration switcher
