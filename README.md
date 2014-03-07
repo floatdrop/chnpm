@@ -1,7 +1,10 @@
 # chnpm
 > npm configuration switcher
 
-Switch between npm registries with fuzzy matching 
+Switch between npm config files.
+
+![2014-03-07 22-56-08 floatdropchnpm](https://f.cloud.github.com/assets/365089/2359681/b574c79a-a61a-11e3-973c-18ed220fb466.png)
+
 
 ## Installation
 
