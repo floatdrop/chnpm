@@ -13,11 +13,11 @@ var currentNpmRc = parseNpmRc(NPMRC);
 
 function save(as) {
     fs.createReadStream(NPMRC)
-        .pipe(fs.createWriteStream(find(as)));
+        .pipe(fs.createWriteStream(path.join(HOME, '.' + as + '.npmrc')));
 }
 
 function find(name) {
-    return globule.find(path.join(HOME, '.' + name + '*.npmrc')).pop();
+    return globule.find(path.join(HOME, '.' + name + '.npmrc')).pop();
 }
 
 function get(name) {
