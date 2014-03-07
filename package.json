@@ -1,0 +1,34 @@
+{
+  "name": "chnpm",
+  "version": "0.0.0",
+  "description": "Switch between npm registries with fuzzy matching",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "chnpm": "./cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/floatdrop/chnpm.git"
+  },
+  "keywords": [
+    "npm",
+    "switch",
+    "registry"
+  ],
+  "author": "Vsevolod Strukchinsky <floatdrop@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/floatdrop/chnpm/issues"
+  },
+  "homepage": "https://github.com/floatdrop/chnpm",
+  "dependencies": {
+    "commander": "~2.1.0",
+    "globule": "~0.2.0",
+    "ini": "~1.1.0",
+    "colors": "~0.6.2",
+    "pad": "0.0.4"
+  }
+}
