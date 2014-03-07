@@ -2,8 +2,10 @@
 
 'use strict';
 
-var chnpm   = require('./'),
-    program = require('commander');
+var chnpm    = require('./'),
+    program  = require('commander'),
+    fs       = require('fs'),
+    inquirer = require('inquirer');
 
 require('colors');
 
@@ -25,7 +27,21 @@ program
     .command('save <name>')
     .description('save current .npmrc as .<name>.npmrc')
     .action(function (name) {
-        chnpm.save(name);
+        var rc = chnpm.find(name);
+        fs.exists(rc, function (exist) {
+            if (!exist) { return chnpm.save(name); }
+            inquirer.prompt({
+                type: 'confirm',
+                name: 'overwrite',
+                message: name.yellow + ' exists, do you whant to overwrite it?',
+                default: false
+            }, function (answers) {
+                if (answers.overwrite) {
+                    chnpm.save(name);
+                }
+            });
+
+        });
     });
 
 program

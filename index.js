@@ -60,6 +60,7 @@ module.exports = {
     save: save,
     swap: swap,
     get: get,
+    find: find,
     current: current,
     list: list
 };
