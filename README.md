@@ -28,10 +28,7 @@ Switched to user@npm.localdomain.net
 
 ```bash
 $ chnpm list
-
-    current: floatdrop@npm.domain.ru
-    ------------ available: -------------
-        npm: floatdrop@registry.npmjs.org
+        npm: floatdrop@registry.npmjs.org (current)
      yandex: floatdrop@npm.domain.ru
 ```
 
