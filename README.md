@@ -3,8 +3,7 @@
 
 It's like `chsh`, but for npm.
 
-![2014-03-08 18-24-58 1 zsh](https://f.cloud.github.com/assets/365089/2365331/c1389e42-a6bc-11e3-8ba3-bb60dac80d5d.png)
-
+![2014-03-08 18-39-04 1 chnpm zsh](https://f.cloud.github.com/assets/365089/2365351/c7e34308-a6be-11e3-9c2e-862373d96c06.png)
 
 ## Installation
 
