@@ -39,7 +39,8 @@ NpmRc.prototype.save = function (name, cb) {
     var rs = fs.createReadStream(this.path);
     this.path = resolve(name);
     var ws = fs.createWriteStream(this.path);
-    rs.pipe(ws).on('finish', cb);
+    rs.pipe(ws);
+    rs.on('end', cb);
 };
 
 NpmRc.prototype.toString = function () {
