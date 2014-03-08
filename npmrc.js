@@ -15,6 +15,10 @@ function NpmRc(rcPath) {
         return new NpmRc(rcPath);
     }
 
+    if (!fs.existsSync(rcPath)) {
+        return undefined;
+    }
+
     this.ini = ini.parse(fs.readFileSync(rcPath, 'utf-8'));
 
     this.path = rcPath;

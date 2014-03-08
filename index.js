@@ -19,8 +19,8 @@ module.exports.saveRc = function (name) {
 module.exports.setRc = function (name) {
     var rc = npmrc(npmrc.resolve(name));
 
-    if (!rc) {
-        return this.emit('info', 'File ' + npmrc.resolve(name) + ' not found!');
+    if (_.isEmpty(rc)) {
+        return this.emit('info', 'File `' + npmrc.resolve(name) + '` not found!');
     }
 
     rc.save(undefined, function () {

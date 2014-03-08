@@ -45,4 +45,13 @@ describe('chnpm', function () {
         });
         chnpm.setRc('repo');
     });
+
+    it('should warn about non-existent configs', function (done) {
+        var chnpm = require('..');
+        chnpm.on('info', function (message) {
+            expect(message).to.contain('File `temp/.unknown.npmrc` not found!');
+            done();
+        });
+        chnpm.setRc('unknown');
+    });
 });
