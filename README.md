@@ -3,7 +3,7 @@
 
 It's like `chsh`, but for npm.
 
-![2014-03-07 22-56-08 floatdropchnpm](https://f.cloud.github.com/assets/365089/2359681/b574c79a-a61a-11e3-973c-18ed220fb466.png)
+![2014-03-08 18-24-58 1 zsh](https://f.cloud.github.com/assets/365089/2365331/c1389e42-a6bc-11e3-8ba3-bb60dac80d5d.png)
 
 
 ## Installation
@@ -22,15 +22,18 @@ chnpm save npmjs
 
 ```bash
 $ chnpm local
-Switched to user@npm.localdomain.net from user@registry.npmjs.org
+Switched to user@npm.localdomain.net
 ```
 
 ### Listing registries
 
 ```bash
 $ chnpm list
-        npm: floatdrop@registry.npmjs.org (current)
-    private: floatdrop@npm.private.ru
+
+    current: floatdrop@npm.domain.ru
+    ------------ available: -------------
+        npm: floatdrop@registry.npmjs.org
+     yandex: floatdrop@npm.domain.ru
 ```
 
 ## License

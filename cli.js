@@ -32,10 +32,10 @@ program
     .description('save current .npmrc as .<name>.npmrc')
     .action(chnpm.saveRc.bind(chnpm));
 
-// program
-//     .command('* <name>')
-//     .description('set current .npmrc as .<name>.npmrc')
-//     .action(chnpm.setRc.bind(chnpm));
+program
+    .command('* <name>')
+    .description('set current .npmrc as .<name>.npmrc')
+    .action(chnpm.setRc.bind(chnpm));
 
 program
     .parse(process.argv);
