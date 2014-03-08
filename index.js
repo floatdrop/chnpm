@@ -44,16 +44,15 @@ module.exports.list = function () {
 module.exports.listRcs = function () {
     var ls = this.rcs();
 
-    var current = ls.current.toString();
-
     var other = _.reject(_.values(ls), { name: 'current' })
-        .map(function (item) { return item.toString(); })
+        .map(function (item) {
+            var s = item.toString();
+            if (item.uri === ls.current.uri) { s += ' (current)'.green; }
+            return s;
+        })
         .join('\n');
 
-    this.emit('info', [
-        '',
-        current.green,
-        '    ------------ available: -------------'.grey,
-        other
-    ].join('\n'));
+    other = other || 'You are on `' + ls.current.uri.green + '`. Run `chnpm save <name>` to save it into list.';
+
+    this.emit('info', other);
 };
