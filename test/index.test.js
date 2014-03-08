@@ -37,6 +37,15 @@ describe('chnpm', function () {
         chnpm.saveRc('new');
     });
 
+    it('should not overwrite configs', function (done) {
+        var chnpm = require('..');
+        chnpm.on('error', function (message) {
+            expect(message).to.contain('File `temp/.repo.npmrc` already exist!');
+            done();
+        });
+        chnpm.saveRc('repo');
+    });
+
     it('should switch configs', function (done) {
         var chnpm = require('..');
         chnpm.on('info', function (message) {

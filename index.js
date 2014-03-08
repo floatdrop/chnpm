@@ -10,6 +10,10 @@ require('colors');
 module.exports = new EventEmitter2();
 
 module.exports.saveRc = function (name) {
+    if (!_.isEmpty(npmrc(npmrc.resolve(name)))) {
+        return this.emit('error', 'File `' + npmrc.resolve(name) + '` already exist!');
+    }
+
     var rc = npmrc(npmrc.NpmRcPath);
     rc.save(name, function () {
         this.emit('info', 'Saved ' + rc.uri + ' as ' + rc.basename);
