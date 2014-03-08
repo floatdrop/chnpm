@@ -11,5 +11,7 @@ pids
 logs
 results
 
-npm-debug.log
+npmw-debug.log
 node_modules
+temp
+coverage

@@ -1,66 +1,55 @@
 'use strict';
 
-var path = require('path'),
-    globule = require('globule'),
-    ini = require('ini'),
-    url = require('url'),
-    fs = require('fs'),
-    pad = require('pad');
+var globule = require('globule'),
+    EventEmitter2 = require('eventemitter2').EventEmitter2,
+    npmrc = require('./npmrc'),
+    _ = require('lodash');
 
-var HOME = process.env.HOME,
-    NPMRC = path.join(HOME, '.npmrc'),
-    parseNpmRc;
+require('colors');
 
-function save(as) {
-    fs.createReadStream(NPMRC)
-        .pipe(fs.createWriteStream(path.join(HOME, '.' + as + '.npmrc')));
-}
+module.exports = new EventEmitter2();
 
-function find(name) {
-    return globule.find(path.join(HOME, '.' + name + '.npmrc')).pop();
-}
-
-function get(name) {
-    return parseNpmRc(find(name));
-}
-
-function swap(to) {
-    fs.createReadStream(find(to))
-        .pipe(fs.createWriteStream(NPMRC));
-}
-
-function current() {
-    return parseNpmRc(NPMRC);
-}
-
-function list() {
-    return globule.find(path.join(HOME, '.*.npmrc')).map(parseNpmRc);
-}
-
-parseNpmRc = function (p) {
-    var obj = ini.parse(fs.readFileSync(p, 'utf-8'));
-    obj.name = path.basename(p).split('.npmrc').shift().substr(1) || 'current';
-    obj.user = obj.email && obj.email.split('@').shift();
-    obj.uri = [
-        obj.user || 'anonymous',
-        url.parse(obj.registry || 'http://registry.npmjs.org').host
-    ].join('@');
-    obj.current = path.basename(p) === '.npmrc' || obj.uri === current().uri;
-    obj.toString = function () {
-        if (this.current) {
-            return pad(11, this.name) + ': ' + this.uri;
-        } else {
-            return pad(11, this.name) + ': ' + this.uri;
-        }
-    };
-    return obj;
+module.exports.saveRc = function (name) {
+    var rc = npmrc(npmrc.NpmRcPath);
+    rc.save(name, function () {
+        this.emit('info', 'Saved ' + rc.uri + ' as ' + rc.basename);
+    }.bind(this));
 };
 
-module.exports = {
-    save: save,
-    swap: swap,
-    get: get,
-    find: find,
-    current: current,
-    list: list
+module.exports.setRc = function (name) {
+    var rc = npmrc(npmrc.resolve(name));
+
+    if (!rc) {
+        return this.emit('info', 'File ' + npmrc.resolve(name) + ' not found!');
+    }
+
+    rc.save(undefined, function () {
+        this.emit('info', 'Switched to ' + rc.uri);
+    }.bind(this));
+};
+
+module.exports.rcs = function () {
+    var rcs = this.list();
+    return _.zipObject(_.pluck(rcs, 'name'), rcs);
+};
+
+module.exports.list = function () {
+    return globule.find(npmrc.AllNpmRcs).map(npmrc);
+};
+
+module.exports.listRcs = function () {
+    var ls = this.rcs();
+
+    var current = ls.current.toString();
+
+    var other = _.reject(_.values(ls), { name: 'current' })
+        .map(function (item) { return item.toString(); })
+        .join('\n');
+
+    this.emit('info', [
+        '',
+        current.green,
+        '    ------------ available: -------------'.grey,
+        other
+    ].join('\n'));
 };

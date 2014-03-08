@@ -21,7 +21,6 @@
     "disallowSpaceAfterObjectKeys": true,
     "disallowSpacesInsideParentheses": true,
     "disallowSpacesInsideArrayBrackets": true,
-    "disallowSpacesInsideObjectBrackets": true,
 
     "requireLineFeedAtFileEnd": true,
     "safeContextKeyword": "self",
