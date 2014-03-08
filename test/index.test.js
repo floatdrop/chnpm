@@ -20,7 +20,6 @@ describe('chnpm', function () {
     it('should list configs', function (done) {
         var chnpm = require('..');
         chnpm.on('info', function (message) {
-            expect(message).to.contain('current: user@registry.npmjs.org');
             expect(message).to.contain('repo: user@repo.domain.com');
             done();
         });
