@@ -7,9 +7,9 @@ var path = require('path'),
     fs = require('fs'),
     pad = require('pad');
 
-var HOME = process.env.HOME;
-var NPMRC = path.join(HOME, '.npmrc');
-var currentNpmRc = parseNpmRc(NPMRC);
+var HOME = process.env.HOME,
+    NPMRC = path.join(HOME, '.npmrc'),
+    parseNpmRc;
 
 function save(as) {
     fs.createReadStream(NPMRC)
@@ -37,7 +37,7 @@ function list() {
     return globule.find(path.join(HOME, '.*.npmrc')).map(parseNpmRc);
 }
 
-function parseNpmRc(p) {
+parseNpmRc = function (p) {
     var obj = ini.parse(fs.readFileSync(p, 'utf-8'));
     obj.name = path.basename(p).split('.npmrc').shift().substr(1) || 'current';
     obj.user = obj.email && obj.email.split('@').shift();
@@ -45,7 +45,7 @@ function parseNpmRc(p) {
         obj.user || 'anonymous',
         url.parse(obj.registry || 'http://registry.npmjs.org').host
     ].join('@');
-    obj.current = obj.uri === (currentNpmRc || {}).uri;
+    obj.current = path.basename(p) === '.npmrc' || obj.uri === current().uri;
     obj.toString = function () {
         if (this.current) {
             return pad(11, this.name) + ': ' + this.uri;
@@ -54,7 +54,7 @@ function parseNpmRc(p) {
         }
     };
     return obj;
-}
+};
 
 module.exports = {
     save: save,
