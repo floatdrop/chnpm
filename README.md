@@ -15,7 +15,7 @@ It's like `chsh`, but for npm.
 
 ```bash
 $ chnpm save npmjs
-Switched to user@registry.npmjs.org
+Saved user@registry.npmjs.org as .npmjs.npmrc
 ```
 
 ### Switching between registries
