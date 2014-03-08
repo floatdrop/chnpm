@@ -4,7 +4,9 @@
   "description": "Switch between npm registries with fuzzy matching",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jshint . && jscs . && mocha -R spec",
+    "coverage": "istanbul cover node_modules/.bin/_mocha --report html -- -R spec",
+    "coveralls": "istanbul cover _mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls"
   },
   "bin": {
     "chnpm": "./cli.js"
@@ -31,5 +33,14 @@
     "colors": "~0.6.2",
     "pad": "0.0.4",
     "inquirer": "~0.4.1"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.0",
+    "mocha-lcov-reporter": "~0.0.1",
+    "coveralls": "~2.8.0",
+    "istanbul": "~0.2.3",
+    "jshint": "~2.4.4",
+    "jscs": "~1.3.0",
+    "chai": "~1.9.0"
   }
 }

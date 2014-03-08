@@ -1,5 +1,7 @@
-# chnpm
+# chnpm 
 > npm configuration switcher
+
+[![NPM Version](https://badge.fury.io/js/chnpm.png)](https://npmjs.org/package/chnpm) [![Build Status](https://travis-ci.org/floatdrop/chnpm.png?branch=master)](https://travis-ci.org/floatdrop/chnpm) [![Coverage Status](https://coveralls.io/repos/floatdrop/chnpm/badge.png?branch=master)](https://coveralls.io/r/floatdrop/chnpm) [![Dependency Status](https://gemnasium.com/floatdrop/chnpm.png)](https://gemnasium.com/floatdrop/chnpm)
 
 Switch between npm config files.
 
