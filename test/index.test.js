@@ -17,7 +17,7 @@ describe('chnpm', function () {
         ncp(path.join(__dirname, 'fixtures'), 'temp', done);
     });
 
-    it('should current config', function (done) {
+    it('should show current config', function (done) {
         var chnpm = require('..');
         chnpm.on('info', function (message) {
             expect(message).to.contain('You are on');
