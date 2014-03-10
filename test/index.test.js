@@ -17,6 +17,15 @@ describe('chnpm', function () {
         ncp(path.join(__dirname, 'fixtures'), 'temp', done);
     });
 
+    it('should current config', function (done) {
+        var chnpm = require('..');
+        chnpm.on('info', function (message) {
+            expect(message).to.contain('You are on');
+            done();
+        });
+        chnpm.currentRc();
+    });
+
     it('should list configs', function (done) {
         var chnpm = require('..');
         chnpm.on('info', function (message) {

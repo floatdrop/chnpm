@@ -37,6 +37,11 @@ module.exports.rcs = function () {
     return _.zipObject(_.pluck(rcs, 'name'), rcs);
 };
 
+module.exports.currentRc = function () {
+    var rcs = this.rcs();
+    this.emit('info', 'You are on ' + rcs.current.uri.green);
+};
+
 module.exports.list = function () {
     return globule.find(npmrc.AllNpmRcs).map(npmrc);
 };

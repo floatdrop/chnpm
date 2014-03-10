@@ -39,3 +39,7 @@ program
 
 program
     .parse(process.argv);
+
+if (!program.args.length) {
+    chnpm.currentRc();
+}
