@@ -6,32 +6,45 @@ It's like `chsh`, but for npm.
 ![2014-03-08 18-39-04 1 chnpm zsh](https://f.cloud.github.com/assets/365089/2365351/c7e34308-a6be-11e3-9c2e-862373d96c06.png)
 
 ## Installation
-
 `npm i chnpm -g`
 
 ## Usage
 
 ### Saving current configuration:
-
 ```bash
 $ chnpm save npmjs
 Saved user@registry.npmjs.org as .npmjs.npmrc
 ```
 
 ### Switching between registries
-
 ```bash
 $ chnpm local
 Switched to user@npm.localdomain.net
 ```
 
 ### Listing registries
-
 ```bash
 $ chnpm list
         npm: floatdrop@registry.npmjs.org (current)
      yandex: floatdrop@npm.domain.ru
 ```
+
+### Show current configuration
+```bash
+$ npm config list
+# Jk ;)
+
+$ chnpm
+You are on user@registry.com
+```
+
+## Alternatives
+
+ * [npmrc-switcher](https://github.com/BBC-News/npmrc-switcher) by [@JakeChampion](https://github.com/JakeChampion)
+ * [npmrc](https://github.com/deoxxa/npmrc) by [@deoxxa](https://github.com/deoxxa)
+
+If you know other npmrc tools - PR's are welcome!
+
 
 ## License
 
