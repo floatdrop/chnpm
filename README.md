@@ -10,16 +10,32 @@ It's like `chsh`, but for npm.
 
 ## Usage
 
-### Saving current configuration:
+First, save your current configuration:
+
 ```bash
 $ chnpm save npmjs
 Saved user@registry.npmjs.org as .npmjs.npmrc
 ```
 
-### Switching between registries
+After this you have new file `~/.npmjs.npmrc` with your configuration. Now you can reconfigure current config on another repository:
+
 ```bash
-$ chnpm local
-Switched to user@npm.localdomain.net
+$ npm npm config set --registry <registry url>
+$ npm login
+```
+
+This will edit your current `.npmrc` with new information about repository and user. Save it!
+
+```bash
+$ chnpm save private
+Saved user@registry.private.org as .private.npmrc
+```
+
+And you can switch between them:
+
+```bash
+$ chnpm npmjs
+Switched to user@registry.npmjs.org
 ```
 
 ### Listing registries
@@ -32,8 +48,7 @@ $ chnpm list
 ### Show current configuration
 ```bash
 $ npm config list
-# Jk ;)
-
+# or
 $ chnpm
 You are on user@registry.com
 ```

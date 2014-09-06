@@ -28,7 +28,7 @@ module.exports.setRc = function (name) {
     }
 
     rc.save(undefined, function () {
-        this.emit('info', 'Switched to ' + rc.uri);
+        this.emit('info', 'Switched to ' + rc.uri.green);
     }.bind(this));
 };
 
