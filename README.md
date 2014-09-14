@@ -20,7 +20,7 @@ Saved user@registry.npmjs.org as .npmjs.npmrc
 After this you have new file `~/.npmjs.npmrc` with your configuration. Now you can reconfigure current config on another repository:
 
 ```bash
-$ npm npm config set --registry <registry url>
+$ npm config set --registry <registry url>
 $ npm login
 ```
 
