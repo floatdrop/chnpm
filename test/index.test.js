@@ -57,7 +57,7 @@ describe('chnpm', function () {
     it('should switch configs', function (done) {
         var chnpm = require('..');
         chnpm.on('info', function (message) {
-            expect(message).to.contain('Switched to user@repo.domain.com');
+            expect(message).to.contain('user@repo.domain.com');
             done();
         });
         chnpm.setRc('repo');
