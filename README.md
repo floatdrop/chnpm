@@ -6,7 +6,9 @@ It's like `chsh`, but for npm.
 ![2014-03-08 18-39-04 1 chnpm zsh](https://f.cloud.github.com/assets/365089/2365351/c7e34308-a6be-11e3-9c2e-862373d96c06.png)
 
 ## Installation
-`npm i chnpm -g`
+```
+npm i chnpm -g
+```
 
 ## Usage
 
@@ -20,7 +22,7 @@ Saved user@registry.npmjs.org as .npmjs.npmrc
 After this you have new file `~/.npmjs.npmrc` with your configuration. Now you can reconfigure current config on another repository:
 
 ```bash
-$ npm config set --registry <registry url>
+$ npm config set registry <registry url>
 $ npm login
 ```
 
