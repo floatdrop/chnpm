@@ -1,45 +1,60 @@
 #!/usr/bin/env node
 'use strict';
+var meow = require('meow');
+var chnpm = require('./');
+var chalk = require('chalk');
 
-var chnpm    = require('./'),
-    program  = require('commander');
+var cli = meow({
+	help: [
+		'Usage',
+		'  $ chnpm [options] [name]',
+		'',
+		'Examples',
+		'  $ chnpm',
+		'  Currently on ' + chalk.green('http://registry.npmjs.org'),
+		'',
+		'  $ chnpm --save npmjs',
+		'  Config saved to ~/.npmjs.npmrc',
+		'',
+		'  $ npm config set registry http://registry.local.org',
+		'  $ chnpm --save local',
+		'  Config saved to ~/.local.npmrc',
+		'',
+		'  $ chnpm local',
+		'  Switched to ' + chalk.green('http://registry.local.org'),
+		'',
+		'Options',
+		'  --save NAME  Save current configuration to ~/.NAME.npmrc'
+	].join('\n')
+});
 
-program
-    .version(require('./package.json').version);
-
-program
-    .option('-v, --verbose', 'Enable verbose output')
-    .parse(process.argv);
-
-chnpm.on('info', console.log);
-
-if (program.verbose) {
-    chnpm.on('log', console.log);
-    chnpm.on('warn', console.warn);
-    chnpm.on('error', function (message) {
-        console.error(message);
-        process.exit(1);
-    });
+if (cli.input[0]) {
+	try {
+		chnpm.load(cli.input[0]);
+		console.log('Switched to ' + chalk.green(chnpm.current()));
+		process.exit(0);
+	} catch (error) {
+		fail(error);
+	}
 }
 
-program
-    .command('list')
-    .description('list available configurations')
-    .action(chnpm.listRcs.bind(chnpm));
+if (!Object.keys(cli.flags).length) {
+	console.log('Currently on ' + chalk.green(chnpm.current()));
+	process.exit(0);
+}
 
-program
-    .command('save <name>')
-    .description('save current .npmrc as .<name>.npmrc')
-    .action(chnpm.saveRc.bind(chnpm));
+if (cli.flags.save) {
+	try {
+		chnpm.save(cli.flags.save);
+		console.log('Config saved to ~/.' + name + '.npmrc');
+		process.exit(0);
+	} catch (error) {
+		fail(error);
+	}
+}
 
-program
-    .command('* <name>')
-    .description('set current .npmrc as .<name>.npmrc')
-    .action(chnpm.setRc.bind(chnpm));
-
-program
-    .parse(process.argv);
-
-if (!program.args.length) {
-    chnpm.currentRc();
+function fail (error) {
+	console.error(chalk.red('Operation failed: ') + error.message);
+	console.log(err.stack);
+	process.exit(1);
 }

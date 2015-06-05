@@ -1,63 +1,35 @@
 'use strict';
 
-var globule = require('globule'),
-    EventEmitter2 = require('eventemitter2').EventEmitter2,
-    npmrc = require('./npmrc'),
-    _ = require('lodash');
+var fs = require('fs');
+var ini = require('ini');
+var pwuid = require('pwuid');
+var cp = require('cp-file');
 
-require('colors');
-
-module.exports = new EventEmitter2();
-
-module.exports.saveRc = function (name) {
-    if (!_.isEmpty(npmrc(npmrc.resolve(name)))) {
-        return this.emit('error', 'File `' + npmrc.resolve(name) + '` already exist!');
-    }
-
-    var rc = npmrc(npmrc.NpmRcPath);
-    rc.save(name, function () {
-        this.emit('info', 'Saved ' + rc.uri + ' as ' + rc.basename);
-    }.bind(this));
+module.exports.current = function () {
+	var config = ini.parse(fs.readFileSync(pwuid().dir + '/.npmrc', 'utf-8'));
+	return config.registry;
 };
 
-module.exports.setRc = function (name) {
-    var rc = npmrc(npmrc.resolve(name));
+module.exports.save = function (name) {
+	if (!name) {
+		throw new Error('name argument is required');
+	}
 
-    if (_.isEmpty(rc)) {
-        return this.emit('info', 'File `' + npmrc.resolve(name) + '` not found!');
-    }
+	if (typeof name !== 'string') {
+		throw new Error('name should be a string');
+	}
 
-    rc.save(undefined, function () {
-        this.emit('info', 'Switched to ' + rc.uri.green);
-    }.bind(this));
+	cp.sync(pwuid().dir + '/.npmrc', pwuid().dir + '/.' + name + '.npmrc');
 };
 
-module.exports.rcs = function () {
-    var rcs = this.list();
-    return _.zipObject(_.pluck(rcs, 'name'), rcs);
-};
+module.exports.load = function (name) {
+	if (!name) {
+		throw new Error('name argument is required');
+	}
 
-module.exports.currentRc = function () {
-    var rcs = this.rcs();
-    this.emit('info', 'You are on ' + rcs.current.uri.green);
-};
+	if (typeof name !== 'string') {
+		throw new Error('name should be a string');
+	}
 
-module.exports.list = function () {
-    return globule.find(npmrc.AllNpmRcs).map(npmrc);
-};
-
-module.exports.listRcs = function () {
-    var ls = this.rcs();
-
-    var other = _.reject(_.values(ls), { name: 'current' })
-        .map(function (item) {
-            var s = item.toString();
-            if (item.uri === ls.current.uri) { s += ' (current)'.green; }
-            return s;
-        })
-        .join('\n');
-
-    other = other || 'You are on `' + ls.current.uri.green + '`. Run `chnpm save <name>` to save it into list.';
-
-    this.emit('info', other);
+	cp.sync(pwuid().dir + '/.' + name + '.npmrc', pwuid().dir + '/.npmrc');
 };

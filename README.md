@@ -1,68 +1,70 @@
-# chnpm [![Build Status](https://travis-ci.org/floatdrop/chnpm.png?branch=master)](https://travis-ci.org/floatdrop/chnpm)
-> npm configuration switcher
+# chnpm [![Build Status](https://travis-ci.org/floatdrop/chnpm.svg?branch=master)](https://travis-ci.org/floatdrop/chnpm)
 
-It's like `chsh`, but for npm.
+> Manage your npm files with ease
 
-![2014-03-08 18-39-04 1 chnpm zsh](https://f.cloud.github.com/assets/365089/2365351/c7e34308-a6be-11e3-9c2e-862373d96c06.png)
 
-## Installation
+## Install
+
 ```
-npm i chnpm -g
+$ npm install --save chnpm
 ```
+
 
 ## Usage
 
-First, save your current configuration:
+```js
+var chnpm = require('chnpm');
 
-```bash
-$ chnpm save npmjs
-Saved user@registry.npmjs.org as .npmjs.npmrc
+chnpm.current();
+//=> 'http://registry.npmjs.org'
 ```
 
-After this you have new file `~/.npmjs.npmrc` with your configuration. Now you can reconfigure current config on another repository:
 
-```bash
-$ npm config set registry <registry url>
-$ npm login
+## CLI
+
+```
+$ npm install --global chnpm
+```
+```
+  Manage your npm files with ease
+
+  Usage
+    $ chnpm [options] [name]
+
+  Examples
+    $ chnpm
+    Currently on http://registry.npmjs.org
+
+    $ chnpm --save npmjs
+    Config saved to ~/.npmjs.npmrc
+
+    $ npm config set registry http://registry.local.org
+    $ chnpm --save local
+    Config saved to ~/.local.npmrc
+
+    $ chnpm local
+    Switched to http://registry.local.org
+
+  Options
+    --save NAME  Save current configuration to ~/.NAME.npmrc
 ```
 
-This will edit your current `.npmrc` with new information about repository and user. Save it!
 
-```bash
-$ chnpm save private
-Saved user@registry.private.org as .private.npmrc
-```
+## API
 
-And you can switch between them:
+### chnpm.current()
 
-```bash
-$ chnpm npmjs
-Switched to user@registry.npmjs.org
-```
+Returns current registry url.
 
-### Listing registries
-```bash
-$ chnpm list
-        npm: floatdrop@registry.npmjs.org (current)
-     yandex: floatdrop@npm.domain.ru
-```
+### chnpm.save(name)
 
-### Show current configuration
-```bash
-$ npm config list
-# or
-$ chnpm
-You are on user@registry.com
-```
+Saves current config file as `~/.${name}.npmrc`.
 
-## Alternatives
+### chnpm.load(name)
 
- * [npmrc-switcher](https://github.com/BBC-News/npmrc-switcher) by [@JakeChampion](https://github.com/JakeChampion)
- * [npmrc](https://github.com/deoxxa/npmrc) by [@deoxxa](https://github.com/deoxxa)
-
-If you know other npmrc tools - PR's are welcome!
+Saves `~/.${name}.npmrc` as current config file.
 
 
 ## License
 
-MIT
+MIT © [Vsevolod Strukchinsky](http://github.com/floatdrop)
