@@ -3,7 +3,6 @@
 var fs = require('fs');
 var ini = require('ini');
 var pwuid = require('pwuid');
-var cp = require('cp-file');
 
 module.exports.current = function () {
 	var config = ini.parse(fs.readFileSync(pwuid().dir + '/.npmrc', 'utf-8'));
@@ -19,7 +18,8 @@ module.exports.save = function (name) {
 		throw new Error('name should be a string');
 	}
 
-	cp.sync(pwuid().dir + '/.npmrc', pwuid().dir + '/.' + name + '.npmrc');
+	fs.writeFileSync(pwuid().dir + '/.' + name + '.npmrc',
+		fs.readFileSync(pwuid().dir + '/.npmrc'));
 };
 
 module.exports.load = function (name) {
@@ -31,5 +31,6 @@ module.exports.load = function (name) {
 		throw new Error('name should be a string');
 	}
 
-	cp.sync(pwuid().dir + '/.' + name + '.npmrc', pwuid().dir + '/.npmrc');
+	fs.writeFileSync(pwuid().dir + '/.npmrc',
+		fs.readFileSync(pwuid().dir + '/.' + name + '.npmrc'));
 };
