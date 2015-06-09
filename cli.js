@@ -55,6 +55,6 @@ if (cli.flags.save) {
 
 function fail (error) {
 	console.error(chalk.red('Operation failed: ') + error.message);
-	console.log(err.stack);
+	console.log(error.stack);
 	process.exit(1);
 }
