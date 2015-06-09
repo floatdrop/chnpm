@@ -2,10 +2,13 @@
 
 var fs = require('fs');
 var ini = require('ini');
-var pwuid = require('pwuid');
+var passwdUser = require('passwd-user');
+var username = require('username');
+
+var homedir = passwdUser.sync(username.sync()).homedir;
 
 module.exports.current = function () {
-	var config = ini.parse(fs.readFileSync(pwuid().dir + '/.npmrc', 'utf-8'));
+	var config = ini.parse(fs.readFileSync(homedir + '/.npmrc', 'utf-8'));
 	return config.registry;
 };
 
@@ -18,8 +21,8 @@ module.exports.save = function (name) {
 		throw new Error('name should be a string');
 	}
 
-	fs.writeFileSync(pwuid().dir + '/.' + name + '.npmrc',
-		fs.readFileSync(pwuid().dir + '/.npmrc'));
+	fs.writeFileSync(homedir + '/.' + name + '.npmrc',
+		fs.readFileSync(homedir + '/.npmrc'));
 };
 
 module.exports.load = function (name) {
@@ -31,6 +34,6 @@ module.exports.load = function (name) {
 		throw new Error('name should be a string');
 	}
 
-	fs.writeFileSync(pwuid().dir + '/.npmrc',
-		fs.readFileSync(pwuid().dir + '/.' + name + '.npmrc'));
+	fs.writeFileSync(homedir + '/.npmrc',
+		fs.readFileSync(homedir + '/.' + name + '.npmrc'));
 };
