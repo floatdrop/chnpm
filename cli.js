@@ -46,7 +46,7 @@ if (!Object.keys(cli.flags).length) {
 if (cli.flags.save) {
 	try {
 		chnpm.save(cli.flags.save);
-		console.log('Config saved to ~/.' + name + '.npmrc');
+		console.log('Config saved to ~/.' + cli.flags.save + '.npmrc');
 		process.exit(0);
 	} catch (error) {
 		fail(error);
