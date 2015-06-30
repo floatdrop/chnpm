@@ -4,6 +4,7 @@ var fs = require('fs');
 var ini = require('ini');
 var passwdUser = require('passwd-user');
 var username = require('username');
+var cp = require('cp-file');
 
 var homedir = passwdUser.sync(username.sync()).homedir;
 
@@ -13,7 +14,7 @@ module.exports.current = function () {
 };
 
 module.exports.save = function (name) {
-	if (!name) {
+	if (name === undefined) {
 		throw new Error('name argument is required');
 	}
 
@@ -21,12 +22,11 @@ module.exports.save = function (name) {
 		throw new Error('name should be a string');
 	}
 
-	fs.writeFileSync(homedir + '/.' + name + '.npmrc',
-		fs.readFileSync(homedir + '/.npmrc'));
+	cp.sync(homedir + '/.npmrc', homedir + '/.' + name + '.npmrc');
 };
 
 module.exports.load = function (name) {
-	if (!name) {
+	if (name === undefined) {
 		throw new Error('name argument is required');
 	}
 
@@ -34,6 +34,5 @@ module.exports.load = function (name) {
 		throw new Error('name should be a string');
 	}
 
-	fs.writeFileSync(homedir + '/.npmrc',
-		fs.readFileSync(homedir + '/.' + name + '.npmrc'));
+	cp.sync(homedir + '/.' + name + '.npmrc', homedir + '/.npmrc');
 };
