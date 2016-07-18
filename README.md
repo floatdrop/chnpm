@@ -36,7 +36,7 @@ $ npm install --global chnpm
     Currently on http://registry.npmjs.org
 
     $ chnpm --save npmjs
-    Config saved to ~/.npmjs.npmrc
+    Config saved to ~/.npmjs
 
     $ npm config set registry http://registry.local.org
     $ chnpm --save local
